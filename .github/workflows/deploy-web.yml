@@ -7,23 +7,27 @@ name: Deploy Web
 on:
   workflow_dispatch:
   push:
-  
+
+#set environment variables
+env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  APP_NAME: ${{ 'dotnet-docker-heroku-app' }}
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  deploy:
+    name: Deploy to Heroku
+    runs-on: ubuntu-18.04
     steps:
-    - uses: actions/checkout@v3
-    - name: Login to Heroku container registry
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:login
-    - name: Build and Push
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:push -a motello-demo-client web --context-path ./packages/client
-    - name: Release
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:release -a motello-demo-client web
-      
-      
+      # Clone the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Build Docker image
+      - name: Docker build
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+
+      # Push the Docker image to Heroku Container Registry
+      - name: Publish
+        run: |
+          heroku container:push web -a $APP_NAME context-path=./packages/client
+          heroku container:release web -a $APP_NAME
