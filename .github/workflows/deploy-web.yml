@@ -20,7 +20,7 @@ jobs:
     - name: Build and Push
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:push -a motello-demo-client web
+      run: heroku container:push -a motello-demo-client web --context-path ./packages/client
     - name: Release
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
