@@ -16,4 +16,4 @@ jobs:
     - name: Login to Heroku container registry
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: herokucontainer:login
+      run: heroku container:login
