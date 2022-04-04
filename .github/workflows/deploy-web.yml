@@ -29,5 +29,5 @@ jobs:
       # Push the Docker image to Heroku Container Registry
       - name: Publish
         run: |
-          heroku container:push -a $APP_NAME ---recursive -v --context-path=packages/client
+          heroku container:push -a $APP_NAME --context-path=./motello-template/packages/client ---recursive -v
           heroku container:release web -a $APP_NAME
