@@ -1,10 +1,11 @@
 FROM node AS build
 
 WORKDIR /tmp
-COPY package.json yarn.lock ./
-
-RUN yarn install && yarn cache clean
+# COPY package.json yarn.lock ./
 COPY . .
+
+RUN yarn install && yarn cache clean 
+
 RUN yarn build
 
 FROM nginx
