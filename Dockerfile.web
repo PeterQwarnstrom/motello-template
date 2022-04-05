@@ -2,7 +2,7 @@ FROM node AS build
 
 WORKDIR /tmp
 # COPY package.json yarn.lock ./
-COPY . .
+COPY ./packages/client/. .
 
 RUN yarn install && yarn cache clean 
 
