@@ -30,4 +30,4 @@ jobs:
       - name: Publish
         run: |
           heroku container:push -a $APP_NAME --recursive
-          heroku container:release worker -a $APP_NAME
+          heroku container:release web -a $APP_NAME
