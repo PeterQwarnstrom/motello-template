@@ -1,0 +1,16 @@
+FROM node AS build
+
+WORKDIR /temp
+COPY . .
+
+RUN yarn install && yarn cache clean 
+
+RUN yarn build
+
+FROM node:alpine
+
+WORKDIR /app
+
+COPY --from=build /temp/dist/. .
+
+RUN ["node", "server.js"]

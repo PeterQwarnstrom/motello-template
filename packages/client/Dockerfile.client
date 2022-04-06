@@ -1,7 +1,7 @@
 FROM node AS build
 
 WORKDIR /temp
-COPY ./packages/client/. .
+COPY . .
 
 RUN yarn install && yarn cache clean 
 
